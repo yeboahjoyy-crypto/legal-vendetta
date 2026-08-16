@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Legal Vendetta | AI Legal Intelligence for Africa</title>
+
+<meta name="description"
+content="Legal Vendetta is an experimental AI-powered legal research and knowledge platform for African legal systems, beginning with Ghana.">
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #101828;
+    background: #f8fafc;
+    line-height: 1.6;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    border-bottom: 1px solid #e4e7ec;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    color: #0b6bcb;
+}
+
+nav a {
+    text-decoration: none;
+    color: #475467;
+    margin-left: 25px;
+    font-weight: 600;
+}
+
+.hero {
+    background: linear-gradient(135deg, #f8fbff, #eaf3ff);
+    padding: 90px 7%;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.badge {
+    display: inline-block;
+    background: #dcecff;
+    color: #084c94;
+    padding: 7px 13px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+h1 {
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.03;
+    letter-spacing: -3px;
+    margin: 20px 0;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #475467;
+    max-width: 680px;
+}
+
+.buttons {
+    margin-top: 28px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 20px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: 800;
+    margin-right: 10px;
+}
+
+.primary {
+    background: #101828;
+    color: white;
+}
+
+.secondary {
+    background: white;
+    color: #101828;
+    border: 1px solid #d0d5dd;
+}
+
+.mockup {
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 20px 50px rgba(16,24,40,0.12);
+}
+
+.window {
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.window-header {
+    background: #f8fafc;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e4e7ec;
+    font-size: 13px;
+    color: #667085;
+}
+
+.search-area {
+    padding: 18px;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d0d5dd;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.research-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: #0b6bcb;
+    color: white;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.result {
+    display: none;
+    margin: 0 18px 18px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid #e4e7ec;
+    border-radius: 12px;
+}
+
+.result.show {
+    display: block;
+}
+
+.tag {
+    display: inline-block;
+    background: #ecfdf3;
+    color: #067647;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+section {
+    padding: 80px 7%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+.center {
+    text-align: center;
+}
+
+h2 {
+    font-size: 38px;
+    letter-spacing: -1.5px;
+    margin: 12px 0;
+}
+
+.muted {
+    color: #667085;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 35px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.card h3 {
+    margin-bottom: 8px;
+}
+
+.workflow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-top: 35px;
+}
+
+.step {
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.number {
+    color: #0b6bcb;
+    font-weight: 900;
+}
+
+.demo {
+    background: #101828;
+    color: white;
+}
+
+.demo .muted {
+    color: #b8c2d1;
+}
+
+.demo-box {
+    background: white;
+    color: #101828;
+    border-radius: 18px;
+    padding: 22px;
+    margin-top: 30px;
+}
+
+.answer {
+    display: none;
+    margin-top: 15px;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 17px;
+}
+
+.answer.show {
+    display: block;
+}
+
+.citation {
+    margin-top: 12px;
+    padding: 12px;
+    border-left: 3px solid #0b6bcb;
+    background: white;
+}
+
+.disclaimer {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #667085;
+}
+
+footer {
+    background: white;
+    border-top: 1px solid #e4e7ec;
+    padding: 35px 7%;
+    color: #667085;
+}
+
+@media(max-width: 800px) {
+
+    .hero-container,
+    .cards,
+    .workflow {
+        grid-template-columns: 1fr;
+    }
+
+    nav a {
+        display: none;
+    }
+
+    h1 {
+        letter-spacing: -2px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">
+LEGAL <span>VENDETTA</span>
+</div>
+
+<div>
+<a href="#problem">Problem</a>
+<a href="#workflow">How It Works</a>
+<a href="#prototype">Prototype</a>
+</div>
+
+</nav>
+
+
+<header class="hero">
+
+<div class="hero-container">
+
+<div>
+
+<span class="badge">
+GHANA FIRST • AFRICA NEXT
+</span>
+
+<h1>
+Legal intelligence built for African law.
+</h1>
+
+<p>
+Legal Vendetta is an experimental AI-powered legal research and knowledge platform designed to help users discover, understand and verify relevant legal authorities — beginning with Ghana.
+</p>
+
+<div class="buttons">
+
+<a class="btn primary" href="#prototype">
+Try the Prototype
+</a>
+
+<a class="btn secondary" href="#workflow">
+Explore the Workflow
+</a>
+
+</div>
+
+<p class="disclaimer">
+Prototype stage. Not a production legal service and not a substitute for advice from a qualified lawyer.
+</p>
+
+</div>
+
+
+<div class="mockup">
+
+<div class="window">
+
+<div class="window-header">
+Legal Vendetta Research Workspace • Experimental
+</div>
+
+<div class="search-area">
+
+<input
+id="heroQuestion"
+value="Can a landlord terminate a residential tenancy without notice in Ghana?"
+>
+
+<button
+class="research-btn"
+onclick="researchHero()">
+Research
+</button>
+
+</div>
+
+<div id="heroResult" class="result">
+
+<span class="tag">
+PROTOTYPE RESULT
+</span>
+
+<p style="margin-top:10px;">
+<b>Preliminary analysis:</b>
+The answer depends on the tenancy arrangement, applicable legislation, notice requirements and the specific facts.
+</p>
+
+<div class="citation">
+
+<b>Authority trace</b>
+
+<br>
+
+Legislation → tenancy rules → notice requirements → case/application context
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<section id="problem">
+
+<div class="container">
+
+<div class="center">
+
+<span class="badge">
+THE PROBLEM
+</span>
+
+<h2>
+Legal information is powerful — but fragmented.
+</h2>
+
+<p class="muted">
+Legal research can require navigating legislation, judgments, regulations and institutional sources across fragmented information environments.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+Fragmented Sources
+</h3>
+
+<p class="muted">
+Researchers may move between legislation, judgments, regulations and secondary material to answer one question.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Context Matters
+</h3>
+
+<p class="muted">
+Legal answers depend on jurisdiction, date, authority level, facts and how authorities interact.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Trust Requires Traceability
+</h3>
+
+<p class="muted">
+AI-generated legal explanations need source visibility, verification and clear uncertainty signals.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="workflow">
+
+<div class="container">
+
+<div class="center">
+
+<span class="badge">
+AI-NATIVE WORKFLOW
+</span>
+
+<h2>
+ASK → RETRIEVE → REASON → CITE → VERIFY
+</h2>
+
+</div>
+
+
+<div class="workflow">
+
+<div class="step">
+
+<div class="number">01</div>
+
+<h3>Ask</h3>
+
+<p class="muted">
+Express the legal question in natural language.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="number">02</div>
+
+<h3>Retrieve</h3>
+
+<p class="muted">
+Find potentially relevant authorities from a structured legal corpus.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="number">03</div>
+
+<h3>Reason</h3>
+
+<p class="muted">
+Connect rules, facts, exceptions and competing authorities.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="number">04</div>
+
+<h3>Cite</h3>
+
+<p class="muted">
+Show the authority trail behind the explanation.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="number">05</div>
+
+<h3>Verify</h3>
+
+<p class="muted">
+Surface uncertainty and keep human verification in the loop.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="prototype" class="demo">
+
+<div class="container">
+
+<span class="badge">
+INTERACTIVE PROTOTYPE
+</span>
+
+<h2>
+Research a legal question.
+</h2>
+
+<p class="muted">
+This prototype demonstrates the intended Legal Vendetta experience. Its response is illustrative rather than a live legal database.
+</p>
+
+
+<div class="demo-box">
+
+<textarea id="question">What should a researcher check before relying on a Ghanaian legal authority?</textarea>
+
+<button
+class="research-btn"
+onclick="runPrototype()">
+
+Run Legal Vendetta Prototype
+
+</button>
+
+
+<div id="answer" class="answer">
+
+<span class="tag">
+PROTOTYPE RESPONSE
+</span>
+
+<p id="questionOutput" style="margin-top:10px;"></p>
+
+<p>
+Legal Vendetta would decompose this question, retrieve potentially relevant primary authorities, compare their scope and date, and generate a traceable explanation.
+</p>
+
+<div class="citation">
+
+<b>Verification path</b>
+
+<br><br>
+
+1. Identify jurisdiction and legal issue.
+
+<br>
+
+2. Retrieve primary legislation and cases.
+
+<br>
+
+3. Check authority, date and amendments.
+
+<br>
+
+4. Compare potentially conflicting authorities.
+
+<br>
+
+5. Cite the sources used.
+
+</div>
+
+<p class="disclaimer">
+
+This is an experimental prototype. The current demonstration does not perform live retrieval from a Ghanaian legal database.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="container">
+
+<div class="center">
+
+<span class="badge">
+VISION
+</span>
+
+<h2>
+Ghana → West Africa → Africa
+</h2>
+
+<p class="muted">
+The long-term vision is an African legal knowledge layer that helps researchers, lawyers, students, institutions and builders navigate authoritative legal information across jurisdictions.
+</p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<h3>
+Phase 1 — Ghana
+</h3>
+
+<p class="muted">
+Build a high-quality, traceable Ghana legal corpus and research workflow.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Phase 2 — West Africa
+</h3>
+
+<p class="muted">
+Extend the architecture to additional West African legal systems.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Phase 3 — Africa
+</h3>
+
+<p class="muted">
+Create interoperable legal knowledge infrastructure across African jurisdictions.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<b>Legal Vendetta</b>
+
+<br>
+
+AI legal research infrastructure for Africa.
+
+<br><br>
+
+<span>
+Prototype only • Not legal advice • Authorities must be independently verified
+</span>
+
+</footer>
+
+
+<script>
+
+function researchHero() {
+
+document
+.getElementById("heroResult")
+.classList
+.add("show");
+
+}
+
+
+function runPrototype() {
+
+const question =
+document.getElementById("question").value.trim();
+
+document.getElementById("questionOutput").innerHTML =
+"<b>Question:</b> " +
+(question || "Legal research question");
+
+document
+.getElementById("answer")
+.classList
+.add("show");
+
+}
+
+</script>
+
+
+</body>
+  </html>
